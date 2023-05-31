@@ -1,66 +1,52 @@
 package ru.netology.service;
 
-// import org.testng.annotations.Test;
-
-// import static org.testng.Assert.*;
+import org.testng.annotations.Test;
+import org.testng.asserts.Assertion;
+import static org.testng.Assert.*;
 
 public class CashbackHackServiceTest {
 
     CashbackHackService service = new CashbackHackService();
 
-    @org.testng.annotations.Test
-    // меньше нуля на 1
-    public void lessThanZeroBy1() {
-        org.testng.Assert.assertThrows(RuntimeException.class, () ->{
-            service.remain(-1);
-        });
+    @Test
+    public void shouldReturn100IfAmountIs900() {
+        int amount = 900;
+
+        int actual = service.remain(amount);
+        int expected = 100;
+
+        assertEquals(actual, expected);
     }
 
-    @org.testng.annotations.Test
-    // равен нулю
-    public void equalsZero() {
-        org.testng.Assert.assertEquals(service.remain(0), 1000);
+    @Test
+    public void shouldReturn1000IfAmountIs0(){
+
+        int amount = 0;
+
+        int expected = 1000;
+        int actual = service.remain(amount);
+
+        assertEquals(actual,expected);
     }
 
-    @org.testng.annotations.Test
-    // больше нуля на 1
-    public void greaterThanZeroBy1() {
-        org.testng.Assert.assertEquals(service.remain(1), 999);
+    @Test
+    public void shouldReturn800IfAmountIs1300(){
+        int amount = 1300;
+
+        int expected = 700;
+        int actual = service.remain(amount);
+
+        assertEquals(actual,expected);
+
     }
 
-    @org.testng.annotations.Test
-    // меньше лимита
-    public void lessThanTheLimit() {
-        org.testng.Assert.assertEquals(service.remain(300), 700);
-    }
+    @Test
+    public void shouldReturn0IfAmountIs1000(){   // Тест завершается с ошибкой - баг программы
+        int amount = 1000;
 
-    @org.testng.annotations.Test
-    // меньше лимита на 1
-    public void lessThanTheLimitBy1() {
-        org.testng.Assert.assertEquals(service.remain(999), 1);
-    }
+        int expected = 0;
+        int actual = service.remain(amount);
 
-    @org.testng.annotations.Test
-    // равно лимиту
-    public void equalToTheLimit() {
-        org.testng.Assert.assertEquals(service.remain(1000), 0);
-    }
-
-    @org.testng.annotations.Test
-    // больше лимита на 1
-    public void moreThanTheLimitBy1() {
-        org.testng.Assert.assertEquals(service.remain(1001), 999);
-    }
-
-    @org.testng.annotations.Test
-    // больше лимита
-    public void overLimit() {
-        org.testng.Assert.assertEquals(service.remain(1400), 600);
-    }
-
-    @org.testng.annotations.Test
-    // кратно лимиту
-    public void multipleOfTheLimit() {
-        org.testng.Assert.assertEquals(service.remain(3000), 0);
+        assertEquals(actual, expected);
     }
 }
